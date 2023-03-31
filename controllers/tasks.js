@@ -46,7 +46,10 @@ const deleteTask = async (req, res) => {
 const updateTask = async (req, res) =>{
     try{
         const {id : taskID} = req.params;
-        const task = await Task.findOneAndUpdate({_id : taskID}, req.body);
+        const task = await Task.findOneAndUpdate({_id : taskID}, req.body, {
+            new : true,
+            runValidators: true,
+        });
 
         if(!task){
             res.status(404).json({msg : `No task with task ID ${taskID}`})
